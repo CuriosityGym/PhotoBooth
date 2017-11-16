@@ -21,7 +21,7 @@ class EchoLayer(YowInterfaceLayer):
                 self.toLower(receipt)
                 self.toLower(outgoingMessageProtocolEntity)
             if (messageProtocolEntity.getType() == 'media'):
-                #outgoingMessageProtocolEntity = TextMessageProtocolEntity(messageProtocolEntity.getBody(),to = messageProtocolEntity.getFrom())
+                outgoingMessageProtocolEntity = TextMessageProtocolEntity(messageProtocolEntity.getBody(),to = messageProtocolEntity.getFrom())
                 self.toLower(receipt)
                 self.toLower(outgoingMessageProtocolEntity)    
     
