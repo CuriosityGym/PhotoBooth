@@ -14,9 +14,9 @@ class EchoLayer(YowInterfaceLayer):
         if True:
             receipt = OutgoingReceiptProtocolEntity(messageProtocolEntity.getId(), messageProtocolEntity.getFrom(), 'read', messageProtocolEntity.getParticipant())
             if (messageProtocolEntity.getType() == 'text'):
-            	outgoingMessageProtocolEntity = TextMessageProtocolEntity(messageProtocolEntity.getBody(),to = messageProtocolEntity.getFrom())
-              	self.toLower(receipt)
-		self.toLower(outgoingMessageProtocolEntity)
+                outgoingMessageProtocolEntity = TextMessageProtocolEntity(messageProtocolEntity.getBody(),to = messageProtocolEntity.getFrom())
+                self.toLower(receipt)
+                self.toLower(outgoingMessageProtocolEntity)
     
     @ProtocolEntityCallback("receipt")
     def onReceipt(self, entity):
