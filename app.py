@@ -9,7 +9,7 @@ app = Flask(__name__)
 def index():
        phoneNumber= request.args.get('phoneNumber')
        message=request.args.get('message')
-       print(phoneNumber + " "+ message)
+       return phoneNumber + " "+ message
 	
     
 
