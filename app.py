@@ -5,19 +5,24 @@ mqttConnected=False
 publishingTotopicName="/CG/photobooth"
 app = Flask(__name__)
 
+def on_publish(mqttc, obj, mid):
+    print("Published")
+    return
 
 def on_connect(client, userdata, flags, rc):
 	print("Connected with result code "+str(rc))
-	#mqttConnected=True
+	mqttConnected=True
 @app.route('/', methods=['GET'])
 def index():
         phoneNumber= request.args.get('phoneNumber')
         message=request.args.get('message')
+        responseToBooth="{number:"+phoneNumber+",message:"+message+"}"
         client = mqtt.Client()
-        client.on_connect = on_connect	
+        client.on_connect = on_connect
+        client.on_publish = on_publish
         client.connect("iot.eclipse.org", 1883, 60)
         client.loop_start()
-        client.publish(publishingTotopicName, message)        
+        client.publish(publishingTotopicName, responseToBooth)        
         client.loop_stop()
         return "OK"
 	
