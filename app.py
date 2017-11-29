@@ -7,7 +7,10 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def index():
-	return "a"
+       phoneNumber= request.args.get('phoneNumber')
+       message=request.args.get('message')
+       print(phoneNumber + " "+ message)
+	
     
 
 
