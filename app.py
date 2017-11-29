@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, session
 import requests
 
-app = Flask(__name__, static_folder='static', static_url_path='')
+app = Flask(__name__)
 
 
 
