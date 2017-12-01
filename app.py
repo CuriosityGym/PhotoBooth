@@ -2,7 +2,7 @@ import os,re
 from flask import Flask, render_template, request, redirect, session
 import paho.mqtt.client as mqtt
 mqttConnected=False
-keyCode="takephoto"
+keyCode="cg"
 OTPNumbers="6"
 publishingTotopicName="/CG/photobooth"
 app = Flask(__name__)
