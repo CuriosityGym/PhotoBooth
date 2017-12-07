@@ -6,7 +6,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from oauth2client.file import Storage
 from apiclient.http import MediaFileUpload
-import picamera
+#import picamera
 
 subscibingTopic="/CG/photobooth"
 # The CLIENT_SECRETS_FILE variable specifies the name of a file that contains
@@ -35,25 +35,12 @@ def on_connect(client, userdata, flags, rc):
 	print("Connected with result code "+str(rc))
 	mqttConnected=True
 
-def on_message(client, userdata, message):
-    try: #well, shit happens
-        message=str(message.payload.decode("utf-8"))
-        print(message)
-        JSONObject=json.loads(message)
-        #Sample Message is as {number:"9819057179",message:"123456"}
-        recipientNumber=JSONObject["number"]
-        recipientOTP=JSONObject["message"]
-	fileName=clickPhoto(recipientOTP)
-	service=get_autheticated_service()
-	uploadMedia(service,fileName)
-    except Exception as e:
-        print(e)
-        
+       
 
 def clickPhoto(OTP):
-	camera = picamera.PiCamera()
-	filename=OTP+".jpg"
-	camera.capture(filename)    
+	#camera = picamera.PiCamera()
+	filename=str(OTP)+".jpg"
+	#camera.capture(filename)    
 	return filename
 
 
@@ -90,8 +77,22 @@ def uploadMedia(service, fileName):
     file = service.files().create(body=file_metadata,
                                     media_body=media,
                                     fields='id').execute()
+    print(file)
 
-
+def on_message(client, userdata, message):
+        try: #well, shit happens
+                message=str(message.payload.decode("utf-8"))
+                print(message)
+                JSONObject=json.loads(message)
+                #Sample Message is as {number:"9819057179",message:"123456"}
+                recipientNumber=JSONObject["number"]
+                recipientOTP=JSONObject["message"]
+                fileName=clickPhoto(recipientOTP)
+                service=get_authenticated_service()
+                uploadMedia(service,fileName)
+        except Exception as e:
+                print(e)
+ 
 
 if __name__ == '__main__':
     client = mqtt.Client()
