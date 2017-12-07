@@ -1,15 +1,14 @@
 import os
-import pprint, json
+import json
 
 import google.oauth2.credentials
-
 from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 from google_auth_oauthlib.flow import InstalledAppFlow
 from oauth2client.file import Storage
-from oauth2client.client import GoogleCredentials
+from apiclient.http import MediaFileUpload
 
-pp = pprint.PrettyPrinter(indent=2)
+
+
 
 # The CLIENT_SECRETS_FILE variable specifies the name of a file that contains
 # the OAuth 2.0 information for this application, including its client_id and
@@ -55,12 +54,21 @@ def get_authenticated_service():
         storage.put(credentials)
     return build(API_SERVICE_NAME, API_VERSION, credentials = credentials)
 
-def list_drive_files(service, **kwargs):
-  results = service.files().list(
-    **kwargs
-  ).execute()
+##def list_drive_files(service, **kwargs):
+##  results = service.files().list(
+##    **kwargs
+##  ).execute()
+##
+##  pp.pprint(results)
 
-  pp.pprint(results)
+def uploadMedia(service):
+    folder_id='1yDr8nyPS2EOUG0DVhcn6-fPqx_FLD-Gd'
+    file_metadata = {'name': '123456.png', 'parents': [folder_id]}
+    media = MediaFileUpload('abc.png',mimetype='image/png')
+    file = service.files().create(body=file_metadata,
+                                    media_body=media,
+                                    fields='id').execute()
+    print (file.get('id'))
 
 if __name__ == '__main__':
   # When running locally, disable OAuthlib's HTTPs verification. When
@@ -68,6 +76,5 @@ if __name__ == '__main__':
   os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
   service = get_authenticated_service()
   #print(service)
-  list_drive_files(service,
-                   orderBy='modifiedByMeTime desc',
-                   pageSize=5)
+  #list_drive_files(service,orderBy='modifiedByMeTime desc',pageSize=5)
+  uploadMedia(service)
