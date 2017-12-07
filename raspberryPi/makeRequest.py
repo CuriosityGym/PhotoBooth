@@ -23,7 +23,7 @@ API_VERSION = 'v3'
 
 def get_authenticated_service():
     # Copy your credentials from the console
-    with open(CLIENT_SECRETS_FILE, encoding='utf-8') as data_file:
+    with open(CLIENT_SECRETS_FILE) as data_file:
         data = json.loads(data_file.read())
     print()    
     CLIENT_ID = data["installed"]["client_id"]
@@ -63,8 +63,8 @@ def get_authenticated_service():
 
 def uploadMedia(service):
     folder_id='1yDr8nyPS2EOUG0DVhcn6-fPqx_FLD-Gd'
-    file_metadata = {'name': '123456.png', 'parents': [folder_id]}
-    media = MediaFileUpload('abc.png',mimetype='image/png')
+    file_metadata = {'name': 'abc.jpeg', 'parents': [folder_id]}
+    media = MediaFileUpload('office.jpg',mimetype='image/jpeg')
     file = service.files().create(body=file_metadata,
                                     media_body=media,
                                     fields='id').execute()

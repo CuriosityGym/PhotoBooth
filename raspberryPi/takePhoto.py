@@ -6,7 +6,7 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from oauth2client.file import Storage
 from apiclient.http import MediaFileUpload
-
+import picamera
 
 subscibingTopic="/CG/photobooth"
 # The CLIENT_SECRETS_FILE variable specifies the name of a file that contains
@@ -19,7 +19,7 @@ CLIENT_SECRETS_FILE = "client_secret.json"
 SCOPES = ['https://www.googleapis.com/auth/drive']
 API_SERVICE_NAME = 'drive'
 API_VERSION = 'v3'
-with open(CLIENT_SECRETS_FILE, encoding='utf-8') as data_file:
+with open(CLIENT_SECRETS_FILE) as data_file:
         data = json.loads(data_file.read())
         
 CLIENT_ID = data["installed"]["client_id"]
@@ -34,6 +34,7 @@ REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
 def on_connect(client, userdata, flags, rc):
 	print("Connected with result code "+str(rc))
 	mqttConnected=True
+
 def on_message(client, userdata, message):
     try: #well, shit happens
         message=str(message.payload.decode("utf-8"))
@@ -42,12 +43,18 @@ def on_message(client, userdata, message):
         #Sample Message is as {number:"9819057179",message:"123456"}
         recipientNumber=JSONObject["number"]
         recipientOTP=JSONObject["message"]
+	fileName=clickPhoto(recipientOTP)
+	service=get_autheticated_service()
+	uploadMedia(service,fileName)
     except Exception as e:
         print(e)
         
 
 def clickPhoto(OTP):
-    
+	camera = picamera.PiCamera()
+	filename=OTP+".jpg"
+	camera.capture(filename)    
+	return filename
 
 
 
@@ -76,24 +83,13 @@ def get_authenticated_service():
 
 
 
-def uploadMedia(service):
+def uploadMedia(service, fileName):
     folder_id='1yDr8nyPS2EOUG0DVhcn6-fPqx_FLD-Gd'
-    file_metadata = {'name': '123456.png', 'parents': [folder_id]}
-    media = MediaFileUpload('abc.png',mimetype='image/png')
+    file_metadata = {'name': fileName, 'parents': [folder_id]}
+    media = MediaFileUpload(fileName, mimetype='image/jpeg')
     file = service.files().create(body=file_metadata,
                                     media_body=media,
                                     fields='id').execute()
-    #print (file.get('id'))
-
-##if __name__ == '__main__':
-##  # When running locally, disable OAuthlib's HTTPs verification. When
-##  # running in production *do not* leave this option enabled.
-##  os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
-##  service = get_authenticated_service()
-##  #print(service)
-##  #list_drive_files(service,orderBy='modifiedByMeTime desc',pageSize=5)
-##  uploadMedia(service)
-
 
 
 
