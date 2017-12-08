@@ -8,9 +8,10 @@ from oauth2client.file import Storage
 from apiclient.http import MediaFileUpload
 import time
 import picamera
+import requests
 mqttConnected=False
 subscibingTopic="/CG/photobooth"
-MAKER_CHANNEL_EVENT_NAME="UPLOAD_DONE"
+MAKER_CHANNEL_EVENT_NAME="upload_done"
 # The CLIENT_SECRETS_FILE variable specifies the name of a file that contains
 # the OAuth 2.0 information for this application, including its client_id and
 # client_secret.
@@ -89,8 +90,9 @@ def uploadMedia(service, fileName):
 def sendToIFTTT(senderPhoneNumber, GoogleDriveFileURL):
 	MakerURL="https://maker.ifttt.com/trigger/"+MAKER_CHANNEL_EVENT_NAME+"/with/key/cuMqB78snUe89uLgRaCZkc?"
 	MakerURL=MakerURL+"value1="+str(senderPhoneNumber)
-	MakerURL=MakerURL+"value2="+GoogleDriveFileURL
-	print(MakerURL)
+	MakerURL=MakerURL+"&value2=Here is your Selfie.Download it from "+GoogleDriveFileURL
+	#print(MakerURL)
+	r= requests.get(MakerURL)
 		
 
 def on_message(client, userdata, message):
