@@ -7,7 +7,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from oauth2client.file import Storage
 from apiclient.http import MediaFileUpload
 import time
-#import picamera
+import picamera
 mqttConnected=False
 subscibingTopic="/CG/photobooth"
 # The CLIENT_SECRETS_FILE variable specifies the name of a file that contains
@@ -40,9 +40,10 @@ def on_connect(client, userdata, flags, rc):
        
 
 def clickPhoto(OTP):
-	#camera = picamera.PiCamera()
+	camera = picamera.PiCamera()
 	filename=str(OTP)+".jpg"
-	#camera.capture(filename)    
+	camera.capture(filename)
+	print("Photo Saved: "+filename)    
 	return filename
 
 
