@@ -10,6 +10,7 @@ import time
 import picamera
 mqttConnected=False
 subscibingTopic="/CG/photobooth"
+MAKER_CHANNEL_EVENT_NAME="UPLOAD_DONE"
 # The CLIENT_SECRETS_FILE variable specifies the name of a file that contains
 # the OAuth 2.0 information for this application, including its client_id and
 # client_secret.
@@ -83,7 +84,14 @@ def uploadMedia(service, fileName):
     file = service.files().create(body=file_metadata,
                                     media_body=media,
                                     fields='id').execute()
-    print(file)
+    return file.id
+
+def sendToIFTTT(senderPhoneNumber, GoogleDriveFileURL):
+	MakerURL="https://maker.ifttt.com/trigger/"+MAKER_CHANNEL_EVENT_NAME+"/with/key/cuMqB78snUe89uLgRaCZkc?"
+	MakerURL=MakerURL+"value1="+senderPhoneNumber
+	MakerURL=MakerURL+"value2="+GoogleDriveFileURL
+	print(MakerURL)
+		
 
 def on_message(client, userdata, message):
         try: #well, shit happens
@@ -95,7 +103,9 @@ def on_message(client, userdata, message):
                 recipientOTP=JSONObject["message"]
                 fileName=clickPhoto(recipientOTP)
                 service=get_authenticated_service()
-                uploadMedia(service,fileName)
+                fileID=uploadMedia(service,fileName)
+                fileURL="https://drive.google.com/file/d/"+fileID+"/view"
+                sendToIFTTT(recipientNumber,fileURL)
         except Exception as e:
                 print(e)
  
