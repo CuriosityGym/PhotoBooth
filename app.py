@@ -21,9 +21,10 @@ def on_connect(client, userdata, flags, rc):
 @app.route('/', methods=['GET'])
 def index():
         phoneNumber= request.args.get('phoneNumber')
-        message=request.args.get('message')
+        message=request.args.get('message').strip()
         regularExpression="^"+keyCode+"\s[0-9]{"+OTPNumbers+"}$"
         matched=re.match(regularExpression, message.lower())
+        #matched=matched.trim()
         if(matched):        
                 responseToBooth="{number:"+phoneNumber+",message:"+matched[0]+"}"
                 client = mqtt.Client()
