@@ -27,14 +27,15 @@ def index():
         #matched=matched.trim()
         if(matched):        
                 responseToBooth='{"number":"'+phoneNumber+'","message":"' +matched[0][1]+'"}'
+                #print()
                 client = mqtt.Client()
                 client.on_connect = on_connect
                 client.on_publish = on_publish
                 client.connect("iot.eclipse.org", 1883, 60)
                 client.loop_start()
-                client.publish(publishingTotopicName, responseToBooth)        
+                #client.publish(publishingTotopicName, responseToBooth)        
                 client.loop_stop()
-                return "ok"
+                return responseToBooth
         else:
                 return "Not Ok"
             
