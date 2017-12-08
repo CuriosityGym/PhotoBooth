@@ -84,7 +84,7 @@ def uploadMedia(service, fileName):
     file = service.files().create(body=file_metadata,
                                     media_body=media,
                                     fields='id').execute()
-    return file.id
+    return file["id"]
 
 def sendToIFTTT(senderPhoneNumber, GoogleDriveFileURL):
 	MakerURL="https://maker.ifttt.com/trigger/"+MAKER_CHANNEL_EVENT_NAME+"/with/key/cuMqB78snUe89uLgRaCZkc?"
