@@ -1,9 +1,9 @@
 import re
-keyCode="TakePhoto"
+keyCode="cg"
 OTPNumbers="6"
-myString=""
+myString="cg 345677"
 
-regularExpression="^"+keyCode+"\s[0-9]{"+OTPNumbers+"}$"
+regularExpression="^("+keyCode+")\s([0-9]{"+OTPNumbers+"})$"
 #print(regularExpression)
-a=re.match(regularExpression, "TakePhoto 123456")
-print(a[0])
+a=re.findall(regularExpression, myString)
+print(a[0][1])
