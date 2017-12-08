@@ -6,8 +6,9 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from oauth2client.file import Storage
 from apiclient.http import MediaFileUpload
+import time
 #import picamera
-
+mqttConnected=False
 subscibingTopic="/CG/photobooth"
 # The CLIENT_SECRETS_FILE variable specifies the name of a file that contains
 # the OAuth 2.0 information for this application, including its client_id and
@@ -33,6 +34,7 @@ REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
 
 def on_connect(client, userdata, flags, rc):
 	print("Connected with result code "+str(rc))
+	global mqttConnected
 	mqttConnected=True
 
        
@@ -95,9 +97,15 @@ def on_message(client, userdata, message):
  
 
 if __name__ == '__main__':
-    client = mqtt.Client()
-    client.on_connect = on_connect
-    client.on_message=on_message
-    client.connect("iot.eclipse.org", 1883, 60)
-    client.subscribe(subscibingTopic)
-    client.loop_start() 
+        client = mqtt.Client()
+        client.on_connect = on_connect
+        client.on_message=on_message
+        client.connect("iot.eclipse.org", 1883, 60)
+        #while(not mqttConnected):
+        #       print(mqttConnected)
+        #       time.sleep(1)
+
+        client.subscribe(subscibingTopic)
+        run = True
+        while run:
+                client.loop() 
