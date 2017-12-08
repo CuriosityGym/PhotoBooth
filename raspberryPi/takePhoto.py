@@ -45,7 +45,7 @@ def clickPhoto(OTP):
         filename=str(OTP)+".jpg"
         try:
                 camera = picamera.PiCamera()
-                camera.brightness = 50
+                camera.brightness = 70
                 camera.contrast = 70
                 camera.saturation = 0                
                 camera.capture(filename)
