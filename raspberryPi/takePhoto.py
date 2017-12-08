@@ -88,7 +88,7 @@ def uploadMedia(service, fileName):
 
 def sendToIFTTT(senderPhoneNumber, GoogleDriveFileURL):
 	MakerURL="https://maker.ifttt.com/trigger/"+MAKER_CHANNEL_EVENT_NAME+"/with/key/cuMqB78snUe89uLgRaCZkc?"
-	MakerURL=MakerURL+"value1="+senderPhoneNumber
+	MakerURL=MakerURL+"value1="+str(senderPhoneNumber)
 	MakerURL=MakerURL+"value2="+GoogleDriveFileURL
 	print(MakerURL)
 		
@@ -104,7 +104,7 @@ def on_message(client, userdata, message):
                 fileName=clickPhoto(recipientOTP)
                 service=get_authenticated_service()
                 fileID=uploadMedia(service,fileName)
-                fileURL="https://drive.google.com/file/d/"+fileID+"/view"
+                fileURL="https://drive.google.com/file/d/"+str(fileID)+"/view"
                 sendToIFTTT(recipientNumber,fileURL)
         except Exception as e:
                 print(e)
