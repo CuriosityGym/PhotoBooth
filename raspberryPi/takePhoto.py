@@ -40,13 +40,16 @@ def on_connect(client, userdata, flags, rc):
        
 
 def clickPhoto(OTP):
-	camera = picamera.PiCamera()
-	filename=str(OTP)+".jpg"
-	camera.capture(filename)
-	print("Photo Saved: "+filename)    
-	return filename
-
-
+        filename=str(OTP)+".jpg"
+        try:
+                camera = picamera.PiCamera()
+                
+                camera.capture(filename)
+                print("Photo Saved: "+filename)    
+                
+        finally:
+                camera.close()
+        return filename
 
 
 
