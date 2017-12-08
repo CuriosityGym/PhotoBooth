@@ -45,7 +45,10 @@ def clickPhoto(OTP):
         filename=str(OTP)+".jpg"
         try:
                 camera = picamera.PiCamera()
-                
+                camera = picamera.PiCamera()
+                camera.brightness = 50
+                camera.contrast = 70
+                camera.saturation = 50                
                 camera.capture(filename)
                 print("Photo Saved: "+filename)    
                 
@@ -108,7 +111,7 @@ def on_message(client, userdata, message):
                 service=get_authenticated_service()
                 fileID=uploadMedia(service,fileName)
                 fileURL="https://drive.google.com/file/d/"+str(fileID)+"/view"
-                sendToIFTTT(recipientNumber,fileURL)
+                #sendToIFTTT(recipientNumber,fileURL)
         except Exception as e:
                 print(e)
  
