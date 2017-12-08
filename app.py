@@ -20,13 +20,13 @@ def on_connect(client, userdata, flags, rc):
 	
 @app.route('/', methods=['GET'])
 def index():
-        phoneNumber= request.args.get('phoneNumber')
-        message=request.args.get('message').strip()
+        phoneNumber= request.args.get('phoneNumber').strip()
+        message=request.args.get('message').strip().lower()
         regularExpression="^"+keyCode+"\s[0-9]{"+OTPNumbers+"}$"
         matched=re.match(regularExpression, message.lower())
         #matched=matched.trim()
         if(matched):        
-                responseToBooth="{number:"+phoneNumber+",message:"+matched[0]+"}"
+                responseToBooth='{"number":"'+phoneNumber+'","message":"' +matched[0]+'"}'
                 client = mqtt.Client()
                 client.on_connect = on_connect
                 client.on_publish = on_publish
@@ -34,7 +34,7 @@ def index():
                 client.loop_start()
                 client.publish(publishingTotopicName, responseToBooth)        
                 client.loop_stop()
-                return "ok"
+                return matched[0]
         else:
                 return "Not Ok"
             
