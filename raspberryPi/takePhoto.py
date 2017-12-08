@@ -90,9 +90,10 @@ def uploadMedia(service, fileName):
 def sendToIFTTT(senderPhoneNumber, GoogleDriveFileURL):
 	MakerURL="https://maker.ifttt.com/trigger/"+MAKER_CHANNEL_EVENT_NAME+"/with/key/cuMqB78snUe89uLgRaCZkc?"
 	MakerURL=MakerURL+"value1="+str(senderPhoneNumber)
-	MakerURL=MakerURL+"&value2=Here is your Selfie.Download it from "+GoogleDriveFileURL
+	MakerURL=MakerURL+"&value2=Here is your Selfie. Download it from "+GoogleDriveFileURL
 	#print(MakerURL)
 	r= requests.get(MakerURL)
+	print(r)
 		
 
 def on_message(client, userdata, message):
