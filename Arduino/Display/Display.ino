@@ -35,6 +35,7 @@ void loop() {
     switch (recievedCommand)
     {
       case NEW_CODE:
+        lm.clearScreen();
         Serial.println("New Code");
         codeValue[0] = inputString[2];
         codeValue[1] = inputString[3];
@@ -73,6 +74,11 @@ void loop() {
         lm.clearScreen();
         startUploadAnimation(arrowHeads, FONT8x8);
         break;
+      case DONE:
+        Serial.println("DONE");
+        lm.clearScreen();
+        showMultiLine("Done","Thanks!");
+        break;  
 
 
     }
@@ -115,7 +121,7 @@ void startUploadAnimation(char displayText[], int fontSize)
       lm.printChar(displayText[i], (i * multiplier) + shiftRight, j);
     }
     lm.update();
-    delay(100);
+    delay(50);
 
   }
   //lm.update();
@@ -158,6 +164,36 @@ void eraseDisplay()
     }
   }
 }
+
+void showMultiLine(char topLineText[], char bottomLine[])
+{
+  int arrayElementsTop = strlen(topLineText);
+  int arrayElementsBottom = strlen(bottomLine);
+  //Serial.println(displayText);
+  
+    lm.setFont(FONT5x7);
+    byte multiplier = 6;
+    byte shiftRight = 1;
+  
+  for (int i = 0; i < arrayElementsTop; i++)
+  {
+
+    lm.printChar(topLineText[i], (i * multiplier) + shiftRight, 1);
+
+  }
+  lm.update();
+  delay(1000);
+  for (int i = 0; i < arrayElementsBottom; i++)
+  {
+
+    lm.printChar(bottomLine[i], (i * multiplier) + shiftRight, 9);
+
+  }
+  lm.update();
+  
+}
+
+
 
 
 void serialEvent() {
