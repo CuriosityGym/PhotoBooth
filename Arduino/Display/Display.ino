@@ -8,6 +8,10 @@ const byte NUM_COLS = 5;
 #define FLASH '4'
 #define UPLOADING '5'
 #define DONE '6'
+#define ST_ANIM_DONE '7'
+#define ST_SHUTDOWN '8'
+#define uploadAnimationCount 20
+byte animated=uploadAnimationCount;
 
 LedMatrixSPI lm = LedMatrixSPI(NUM_ROWS, NUM_COLS);
 String inputString = "";         // a string to hold incoming data
@@ -36,7 +40,7 @@ void loop() {
     {
       case NEW_CODE:
         lm.clearScreen();
-        Serial.println("New Code");
+        //Serial.println("New Code");
         codeValue[0] = inputString[2];
         codeValue[1] = inputString[3];
         codeValue[2] = inputString[4];
@@ -46,17 +50,17 @@ void loop() {
         break;
 
       case CODE_RECIEVED:
-        Serial.println("CODE_RECIEVED");
+        //Serial.println("CODE_RECIEVED");
         eraseDisplay();
         break;
 
       case READY:
-        Serial.println("READY");
+        //Serial.println("READY");
         showText(readyText, FONT5x7);
         break;
 
       case COUNT_DOWN:
-        Serial.println("COUNT_DOWN");
+        //Serial.println("COUNT_DOWN");
         countDownText[3] = inputString[2];
         lm.clearScreen();
         showText(countDownText, FONT5x7);
@@ -70,12 +74,18 @@ void loop() {
         break;
 
       case UPLOADING:
-        Serial.println("UPLOADING");
+        //Serial.println("UPLOADING");
         lm.clearScreen();
-        startUploadAnimation(arrowHeads, FONT8x8);
+        animated=uploadAnimationCount;
+        while(animated>0)
+        {
+          startUploadAnimation(arrowHeads, FONT8x8);
+          animated=animated-1;
+        }
+        Serial.println(ST_ANIM_DONE);
         break;
       case DONE:
-        Serial.println("DONE");
+        //Serial.println("DONE");
         lm.clearScreen();
         showMultiLine("Done","Thanks!");
         break;  
@@ -103,7 +113,7 @@ void triggerFlash()
 void startUploadAnimation(char displayText[], int fontSize)
 {
   int arrayElements = strlen(displayText);
-  Serial.println(displayText);
+  //Serial.println(displayText);
   byte multiplier = 8;
   byte shiftRight = 0;
   lm.setFont(FONT8x8);
@@ -131,7 +141,7 @@ void startUploadAnimation(char displayText[], int fontSize)
 void showText(char displayText[], int fontSize)
 {
   int arrayElements = strlen(displayText);
-  Serial.println(displayText);
+  //Serial.println(displayText);
   byte multiplier = 8;
   byte shiftRight = 0;
   lm.setFont(FONT8x8);

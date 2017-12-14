@@ -9,6 +9,10 @@ from apiclient.http import MediaFileUpload
 import time
 import picamera
 import requests
+import serial
+import PIL.Image
+import PIL.ImageEnhance
+
 mqttConnected=False
 subscibingTopic="/CG/photobooth"
 MAKER_CHANNEL_EVENT_NAME="upload_done"
@@ -98,7 +102,28 @@ def sendToIFTTT(senderPhoneNumber, GoogleDriveFileURL):
 	r= requests.get(MakerURL)
 	print(r)
 		
+def addWatermark(fileName):
+        base_path = fileName
+        watermark_path = 'watermark.png'
+        base = PIL.Image.open(base_path)
+        baseWidth, baseHeight=base.size
+        watermark = PIL.Image.open(watermark_path)
+        watermarkWidth, watermarkHeight=watermark.size
+        watermark.putalpha(100)
+        
+        brightness = 1
+        watermark = PIL.ImageEnhance.Brightness(watermark).enhance(brightness)
 
+        # apply the watermark
+        some_xy_offset = (baseWidth-watermarkWidth-10, baseHeight-watermarkHeight-10)
+        # the mask uses the transparency of the watermark (if it exists)
+        base.paste(watermark, some_xy_offset, mask=watermark)
+        base.save(fileName)
+        
+def sendSerialMessage(messageType, message):
+     return True   
+
+        
 def on_message(client, userdata, message):
         try: #well, shit happens
                 message=str(message.payload.decode("utf-8"))
@@ -108,6 +133,7 @@ def on_message(client, userdata, message):
                 recipientNumber=JSONObject["number"]
                 recipientOTP=JSONObject["message"]
                 fileName=clickPhoto(recipientOTP)
+                addWatermark(fileName)
                 service=get_authenticated_service()
                 fileID=uploadMedia(service,fileName)
                 fileURL="https://drive.google.com/file/d/"+str(fileID)+"/view"
