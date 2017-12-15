@@ -13,6 +13,9 @@ import serial
 import PIL.Image
 import PIL.ImageEnhance
 
+portName='/dev/ttyUSB0'
+
+
 BLYNK_AUTH = 'cdfcfc54ce1d4e7e8d208fda31a2661f'
 blynk = BlynkLib.Blynk(BLYNK_AUTH)
 MAKER_CHANNEL_EVENT_NAME="upload_done"
