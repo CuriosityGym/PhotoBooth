@@ -128,7 +128,7 @@ def my_write_handler(value):
         print('Current V1 value: {}'.format(value))
         message=value.split(":")
         recipientNumber=message[0]
-        recipientNumber=message[1]
+        recipientOTP=message[1]
         
         try: #well, shit happens               
                 #Sample Message is as {number:"9819057179",message:"123456"}
