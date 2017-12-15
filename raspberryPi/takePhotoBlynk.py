@@ -96,9 +96,9 @@ def uploadMedia(service, fileName):
 
 def sendToIFTTT(senderPhoneNumber, GoogleDriveFileURL):
 	MakerURL="https://maker.ifttt.com/trigger/"+MAKER_CHANNEL_EVENT_NAME+"/with/key/cuMqB78snUe89uLgRaCZkc?"
-	MakerURL=MakerURL+"value1="+str(senderPhoneNumber)
+	MakerURL=MakerURL+"value1=+"+str(senderPhoneNumber)
 	MakerURL=MakerURL+"&value2=Here is your Selfie. Download it from "+GoogleDriveFileURL
-	#print(MakerURL)
+	print(MakerURL)
 	r= requests.get(MakerURL)
 	print(r)
 		
@@ -132,8 +132,8 @@ def deleteFile(fileName):
 def my_write_handler(value):
         print('Current V1 value: {}'.format(value))
         message=value.split(":")
-        recipientNumber=message[0]
-        recipientOTP=message[1]
+        recipientNumber=message[0].strip()
+        recipientOTP=message[1].strip()
         
         try: #well, shit happens               
                 #Sample Message is as {number:"9819057179",message:"123456"}
