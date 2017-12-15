@@ -121,7 +121,12 @@ def addWatermark(fileName):
         base.save(fileName)
         
 def sendSerialMessage(messageType, message):
-     return True   
+     return True
+
+def deleteFile(fileName):
+        os.remove(fileName)
+        
+
 # Register Virtual Pins
 @blynk.VIRTUAL_WRITE(1)
 def my_write_handler(value):
@@ -138,6 +143,7 @@ def my_write_handler(value):
                 addWatermark(fileName)
                 service=get_authenticated_service()
                 fileID=uploadMedia(service,fileName)
+                deleteFile(fileName)
                 fileURL="https://drive.google.com/file/d/"+str(fileID)+"/view"
                 sendToIFTTT(recipientNumber,fileURL)
         except Exception as e:
