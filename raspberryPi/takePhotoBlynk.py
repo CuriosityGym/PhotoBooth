@@ -139,7 +139,7 @@ def my_write_handler(value):
                 service=get_authenticated_service()
                 fileID=uploadMedia(service,fileName)
                 fileURL="https://drive.google.com/file/d/"+str(fileID)+"/view"
-        #sendToIFTTT(recipientNumber,fileURL)
+                sendToIFTTT(recipientNumber,fileURL)
         except Exception as e:
                 print(e)
     
