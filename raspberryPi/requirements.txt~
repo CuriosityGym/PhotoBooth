@@ -4,4 +4,3 @@ google_auth_oauthlib
 google-auth-httplib2
 pillow
 blynk-library-python
-pyserial
