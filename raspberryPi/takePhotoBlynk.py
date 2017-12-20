@@ -184,15 +184,15 @@ def my_write_handler(value):
                                 sendSerialMessage("3",str(countDown)) #start Countdown from 5 seconds
                                 time.sleep(1)
                         sendSerialMessage("4","0")#Ask User to Smile
-                        time.sleep(1)
-                        fileName=clickPhoto(recipientOTP)
-                        sendSerialMessage("5","0") #Show Progress Dialog
-                        addWatermark(fileName)
-                        service=get_authenticated_service()
-                        fileID=uploadMedia(service,fileName)
-                        deleteFile(fileName)
+                        time.sleep(2)
+                        fileName=clickPhoto(recipientOTP)                        
+                        sendSerialMessage("5","0") #Show Please Wait.. Text
+                        addWatermark(fileName)                        
+                        service=get_authenticated_service()                        
+                        fileID=uploadMedia(service,fileName)                        
+                        deleteFile(fileName)                        
                         fileURL="https://drive.google.com/file/d/"+str(fileID)+"/view"
-                        sendToIFTTT(recipientNumber,fileURL)
+                        sendToIFTTT(recipientNumber,fileURL)                      
                         sendSerialMessage("6","0") #Process is Done
                         time.sleep(3)
                         OTPGenerated=False

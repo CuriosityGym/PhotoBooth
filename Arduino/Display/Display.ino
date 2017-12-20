@@ -6,7 +6,7 @@ const byte NUM_COLS = 5;
 #define READY '2'
 #define COUNT_DOWN '3'
 #define FLASH '4'
-#define UPLOADING '5'
+#define PLEASE_WAIT '5'
 #define DONE '6'
 #define ST_ANIM_DONE '7'
 #define ST_SHUTDOWN '8'
@@ -73,16 +73,11 @@ void loop() {
         triggerFlash();
         break;
 
-      case UPLOADING:
+      case PLEASE_WAIT:
         //Serial.println("UPLOADING");
         lm.clearScreen();
-        animated=uploadAnimationCount;
-        while(animated>0)
-        {
-          startUploadAnimation(arrowHeads, FONT8x8);
-          animated=animated-1;
-        }
-        Serial.println(ST_ANIM_DONE);
+        showMultiLine("Please", "Wait...");
+        //startUploadAnimation(arrowHeads, FONT8x8);       
         break;
       case DONE:
         //Serial.println("DONE");
@@ -216,7 +211,7 @@ void serialEvent() {
     // so the main loop can do something about it:
     if (inChar == '-') {
       stringComplete = true;
-      Serial.
+      //Serial.
     }
   }
 }
