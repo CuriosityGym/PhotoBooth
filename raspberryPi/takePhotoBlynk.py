@@ -20,7 +20,7 @@ baudRate=115200
 SerialCommandSeperator=":"
 SerialCommandEnd="-"
 serialConn=serial.Serial(portName, baudRate,bytesize=8, parity='N', stopbits=1)
-
+time.sleep(5) #sleep the Pi for a while, since the Connected Arduino Boots Up
 #Random OTP Generator
 numberofDigits=5
 LowRange=math.pow(10,numberofDigits-1)
