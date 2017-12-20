@@ -154,6 +154,7 @@ def getOTP():
 @blynk.VIRTUAL_WRITE(1)
 def my_write_handler(value):
         global OTPGenerated
+        global currentRandomNumber
         print('Current V1 value: {}'.format(value))
         message=value.split(":")
         recipientNumber=message[0].strip()
