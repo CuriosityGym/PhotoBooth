@@ -12,7 +12,8 @@ import requests
 import serial
 import PIL.Image
 import PIL.ImageEnhance
-from random import randint 
+from random import randint
+import math
 
 portName='/dev/ttyUSB0'
 baudRate=115200
