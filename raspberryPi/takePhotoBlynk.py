@@ -159,7 +159,10 @@ def my_write_handler(value):
         message=value.split(":")
         recipientNumber=message[0].strip()
         recipientOTP=message[1].strip()
-        if(OTPGenerated and recipientOTP==currentRandomNumber):
+        print(currentRandomNumber)
+        print(recipientOTP)
+        print(OTPGenerated)
+        if(OTPGenerated and str(recipientOTP)==str(currentRandomNumber)):
                 print("OTP confirmed")
                 try: #well, shit happens
                         OTPAccepted=True
