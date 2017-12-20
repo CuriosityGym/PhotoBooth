@@ -153,6 +153,7 @@ def getOTP():
 # Register Virtual Pins
 @blynk.VIRTUAL_WRITE(1)
 def my_write_handler(value):
+        global OTPGenerated
         print('Current V1 value: {}'.format(value))
         message=value.split(":")
         recipientNumber=message[0].strip()
