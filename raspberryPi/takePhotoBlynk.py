@@ -157,23 +157,23 @@ def my_write_handler(value):
                 
                 try: #well, shit happens
                         OTPAccepted=True
-                        sendSerialMessage(1,0)## OTP has been Confirmed
+                        sendSerialMessage("1","0")## OTP has been Confirmed
                         time.sleep(1)
-                        sendSerialMessage(2,0) #Ready?
+                        sendSerialMessage("2","0") #Ready?
                         time.sleep(1)
                         for countDown in range[5,0]:
-                                sendSerialMessage(3,countDown) #start Countdown from 5 seconds
+                                sendSerialMessage("3",str(countDown)) #start Countdown from 5 seconds
                                 time.sleep(1)
-                        sendSerialMessage(4,0)#Ask User to Smile                       
+                        sendSerialMessage("4","0")#Ask User to Smile                       
                         fileName=clickPhoto(recipientOTP)
-                        sendSerialMessage(5,0) #Show Progress Dialog
+                        sendSerialMessage("5","0") #Show Progress Dialog
                         addWatermark(fileName)
                         service=get_authenticated_service()
                         fileID=uploadMedia(service,fileName)
                         deleteFile(fileName)
                         fileURL="https://drive.google.com/file/d/"+str(fileID)+"/view"
                         sendToIFTTT(recipientNumber,fileURL)
-                        sendSerialMessage(6,0) #Process is Done
+                        sendSerialMessage("6","0") #Process is Done
                         time.sleep(3)
                         OTPGenerated=False
                         OTPAccepted=False
@@ -200,7 +200,7 @@ def my_write_handler(value):
  
 
 if __name__ == '__main__':
-        if(OTPGenerated):                
+        if(not OTPGenerated):                
                 currentRandomNumber=getOTP()
                 print("OTP Generated is:" +str(currentRandomNumber))
                 sendSerialMessage(0,currentRandomNumber)
