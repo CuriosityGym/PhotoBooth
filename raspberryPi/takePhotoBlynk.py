@@ -141,7 +141,7 @@ def sendSerialMessage(messageType, message):
         messageData=messageType+SerialCommandSeperator+message+SerialCommandEnd
         messageData=messageData.encode()
         print(messageData)
-        #serialConn.write(messageData)
+        serialConn.write(messageData)
 
 def deleteFile(fileName):
         os.remove(fileName)
