@@ -12,9 +12,22 @@ import requests
 import serial
 import PIL.Image
 import PIL.ImageEnhance
+from random import randint 
 
 portName='/dev/ttyUSB0'
+baudRate=115200
+SerialCommandSeperator=":"
+SerialCommandEnd="-"
+serialConn=serial.Serial(portName, baudRate,bytesize=8, parity='N', stopbits=1)
 
+#Random OTP Generator
+numberofDigits=5
+LowRange=math.pow(10,numberofDigits-1)
+HighRange=math.pow(10,numberofDigits)-1
+
+#Semaphores to Sequence the Process
+OTPAccepted=False
+OTPGenerated=False
 
 BLYNK_AUTH = 'cdfcfc54ce1d4e7e8d208fda31a2661f'
 blynk = BlynkLib.Blynk(BLYNK_AUTH)
@@ -124,10 +137,13 @@ def addWatermark(fileName):
         base.save(fileName)
         
 def sendSerialMessage(messageType, message):
-     return True
+        serialConn.write(messageType+SerialCommandSeperator+message+SerialCommandEnd.encode())
 
 def deleteFile(fileName):
         os.remove(fileName)
+        
+def getOTP():
+        return randint(LowRange, HighRange)
         
 
 # Register Virtual Pins
@@ -137,20 +153,32 @@ def my_write_handler(value):
         message=value.split(":")
         recipientNumber=message[0].strip()
         recipientOTP=message[1].strip()
-        
-        try: #well, shit happens               
-                #Sample Message is as {number:"9819057179",message:"123456"}
-                #recipientNumber=JSONObject["number"]
-                #recipientOTP=JSONObject["message"]
-                fileName=clickPhoto(recipientOTP)
-                addWatermark(fileName)
-                service=get_authenticated_service()
-                fileID=uploadMedia(service,fileName)
-                deleteFile(fileName)
-                fileURL="https://drive.google.com/file/d/"+str(fileID)+"/view"
-                sendToIFTTT(recipientNumber,fileURL)
-        except Exception as e:
-                print(e)
+        if(OTPGenerated and recipientOTP==currentRandomNumber):
+                
+                try: #well, shit happens
+                        OTPAccepted=True
+                        sendSerialMessage(1,0)## OTP has been Confirmed
+                        time.sleep(1)
+                        sendSerialMessage(2,0) #Ready?
+                        time.sleep(1)
+                        for countDown in range[5,0]:
+                                sendSerialMessage(3,countDown) #start Countdown from 5 seconds
+                                time.sleep(1)
+                        sendSerialMessage(4,0)#Ask User to Smile                       
+                        fileName=clickPhoto(recipientOTP)
+                        sendSerialMessage(5,0) #Show Progress Dialog
+                        addWatermark(fileName)
+                        service=get_authenticated_service()
+                        fileID=uploadMedia(service,fileName)
+                        deleteFile(fileName)
+                        fileURL="https://drive.google.com/file/d/"+str(fileID)+"/view"
+                        sendToIFTTT(recipientNumber,fileURL)
+                        sendSerialMessage(6,0) #Process is Done
+                        time.sleep(3)
+                        OTPGenerated=False
+                        OTPAccepted=False
+                except Exception as e:
+                        print(e)
     
         
 ##def on_message(client, userdata, message):
@@ -172,6 +200,11 @@ def my_write_handler(value):
  
 
 if __name__ == '__main__':
+        if(OTPGenerated):                
+                currentRandomNumber=getOTP()
+                print("OTP Generated is:" +str(currentRandomNumber))
+                sendSerialMessage(0,currentRandomNumber)
+                OTPGenerated=True
         blynk.run()
 
         

@@ -1,11 +1,14 @@
 import serial
 import time
 
-portName='/dev/ttyUSB0'
+portName='COM3'
 
-
+byteArray=[53,13,10]
 
 ser = serial.Serial(portName)
-ser.baudRate=115200
-ser.write(r'0:12345')     
+#ser.baudRate=115200
+for byteval in byteArray:
+    ser.write(byteval)
+a=ser.read()
+print(a)
 ser.close()   
