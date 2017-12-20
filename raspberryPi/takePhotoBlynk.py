@@ -204,7 +204,7 @@ if __name__ == '__main__':
         if(not OTPGenerated):                
                 currentRandomNumber=getOTP()
                 print("OTP Generated is:" +str(currentRandomNumber))
-                sendSerialMessage(0,currentRandomNumber)
+                sendSerialMessage("0",str(currentRandomNumber))
                 OTPGenerated=True
         blynk.run()
 
