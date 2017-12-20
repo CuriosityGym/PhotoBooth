@@ -159,7 +159,7 @@ def my_write_handler(value):
         recipientNumber=message[0].strip()
         recipientOTP=message[1].strip()
         if(OTPGenerated and recipientOTP==currentRandomNumber):
-                
+                print("OTP confirmed")
                 try: #well, shit happens
                         OTPAccepted=True
                         sendSerialMessage("1","0")## OTP has been Confirmed
