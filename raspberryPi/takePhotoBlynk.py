@@ -138,7 +138,8 @@ def addWatermark(fileName):
         base.save(fileName)
         
 def sendSerialMessage(messageType, message):
-        messageData=messageType+SerialCommandSeperator+message+SerialCommandEnd.encode()
+        messageData=messageType+SerialCommandSeperator+message+SerialCommandEnd
+        messageData=messageData.encode()
         print(messageData)
         #serialConn.write(messageData)
 
