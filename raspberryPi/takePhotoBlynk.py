@@ -153,6 +153,7 @@ def getOTP():
 def setNextOTP():
         global OTPGenerated
         global currentRandomNumber
+        print(OTPGenerated)
         if(not OTPGenerated):                
                 currentRandomNumber=getOTP()
                 print("OTP Generated is:" +str(currentRandomNumber))
@@ -182,7 +183,8 @@ def my_write_handler(value):
                         for countDown in range(5,0,-1):
                                 sendSerialMessage("3",str(countDown)) #start Countdown from 5 seconds
                                 time.sleep(1)
-                        sendSerialMessage("4","0")#Ask User to Smile                       
+                        sendSerialMessage("4","0")#Ask User to Smile
+                        time.sleep(1)
                         fileName=clickPhoto(recipientOTP)
                         sendSerialMessage("5","0") #Show Progress Dialog
                         addWatermark(fileName)
