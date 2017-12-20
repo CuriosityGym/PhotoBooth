@@ -170,7 +170,7 @@ def my_write_handler(value):
                         time.sleep(1)
                         sendSerialMessage("2","0") #Ready?
                         time.sleep(1)
-                        for countDown in range[5,0]:
+                        for countDown in range(5,0,-1):
                                 sendSerialMessage("3",str(countDown)) #start Countdown from 5 seconds
                                 time.sleep(1)
                         sendSerialMessage("4","0")#Ask User to Smile                       
