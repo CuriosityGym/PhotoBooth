@@ -138,7 +138,9 @@ def addWatermark(fileName):
         base.save(fileName)
         
 def sendSerialMessage(messageType, message):
-        serialConn.write(messageType+SerialCommandSeperator+message+SerialCommandEnd.encode())
+        messageData=messageType+SerialCommandSeperator+message+SerialCommandEnd.encode()
+        print(messageData)
+        #serialConn.write(messageData)
 
 def deleteFile(fileName):
         os.remove(fileName)
