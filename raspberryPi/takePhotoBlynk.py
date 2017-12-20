@@ -149,7 +149,15 @@ def deleteFile(fileName):
 def getOTP():
         return randint(LowRange, HighRange)
         
-
+def setNextOTP():
+        global OTPGenerated
+        global currentRandomNumber
+        if(not OTPGenerated):                
+                currentRandomNumber=getOTP()
+                print("OTP Generated is:" +str(currentRandomNumber))
+                sendSerialMessage("0",str(currentRandomNumber))
+                OTPGenerated=True
+        
 # Register Virtual Pins
 @blynk.VIRTUAL_WRITE(1)
 def my_write_handler(value):
@@ -186,6 +194,7 @@ def my_write_handler(value):
                         time.sleep(3)
                         OTPGenerated=False
                         OTPAccepted=False
+                        setNextOTP()
                 except Exception as e:
                         print(e)
     
