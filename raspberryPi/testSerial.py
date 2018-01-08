@@ -10,7 +10,7 @@ def sendSerialMessage(messageType, message):
         ser.write(messageData)
 
 valueList=bytearray(byteAr)
-ser=serial.Serial('COM3', 115200,bytesize=8, parity='N', stopbits=1)
+ser=serial.Serial('/dev/ttyUSB0', 115200,bytesize=8, parity='N', stopbits=1)
 print("Sleeping")
 time.sleep(5)
 print("Waking")
