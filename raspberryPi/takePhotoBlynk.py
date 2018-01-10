@@ -164,7 +164,7 @@ def setNextOTP():
                 OTPGenerated=True
 
 def shutdown():
-    command = "/usr/bin/sudo /sbin/shutdown -r now"
+    command = "/usr/bin/sudo /sbin/shutdown now"
     import subprocess
     process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
     output = process.communicate()[0]
