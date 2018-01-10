@@ -15,6 +15,9 @@ import PIL.ImageEnhance
 from random import randint
 import math
 
+adminPhone="9819057179"
+adminShutdownCode="00000"
+
 portName='/dev/ttyUSB0'
 baudRate=115200
 SerialCommandSeperator=":"
@@ -168,10 +171,14 @@ def my_write_handler(value):
         print('Current V1 value: {}'.format(value))
         message=value.split(":")
         recipientNumber=message[0].strip()
+        recipientNumber=recipientNumber[-10:] #remove all country codes and extra characters 
         recipientOTP=message[1].strip()
         print(currentRandomNumber)
         print(recipientOTP)
         print(OTPGenerated)
+        if(recipientNumber==adminPhone and recipientOTP==adminShutdownCode): #verify if it is to shutdown the device
+                print("Shutdown Recieved")
+                
         if(OTPGenerated and str(recipientOTP)==str(currentRandomNumber)):
                 print("OTP confirmed")
                 try: #well, shit happens
