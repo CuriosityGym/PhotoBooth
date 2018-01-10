@@ -162,6 +162,13 @@ def setNextOTP():
                 print("OTP Generated is:" +str(currentRandomNumber))
                 sendSerialMessage("0",str(currentRandomNumber))
                 OTPGenerated=True
+
+def shutdown():
+    command = "/usr/bin/sudo /sbin/shutdown -r now"
+    import subprocess
+    process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
+    output = process.communicate()[0]
+        
         
 # Register Virtual Pins
 @blynk.VIRTUAL_WRITE(1)
@@ -178,6 +185,8 @@ def my_write_handler(value):
         print(OTPGenerated)
         if(recipientNumber==adminPhone and recipientOTP==adminShutdownCode): #verify if it is to shutdown the device
                 print("Shutdown Recieved")
+                shutdown()
+                return
                 
         if(OTPGenerated and str(recipientOTP)==str(currentRandomNumber)):
                 print("OTP confirmed")
