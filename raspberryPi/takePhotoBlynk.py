@@ -177,7 +177,7 @@ def my_write_handler(value):
                 try: #well, shit happens
                         OTPAccepted=True
                         sendSerialMessage("1","0")## OTP has been Confirmed
-                        time.sleep(1)
+                        time.sleep(2)
                         sendSerialMessage("2","0") #Ready?
                         time.sleep(2)
                         for countDown in range(5,0,-1):
