@@ -263,6 +263,7 @@ def configSettings(value):
                 fileName=clickPhoto(fileName)
                 service=get_authenticated_service()                        
                 fileID=uploadMedia(service,fileName)
+                deleteFile(fileName)
         except Exception as e:
                         print(e)       
         

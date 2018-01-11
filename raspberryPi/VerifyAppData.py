@@ -9,12 +9,7 @@ settingsFile="settings.json"
 ##
 ##print(cameraBrightness)
 ##print(cameraContrast)
-def saveSettings(settingsJSON):
-        f = open(settingsFile, 'r+')       
-        f.seek(0)
-        f.write(settingsJSON)
-        f.truncate()
-        f.close()
+
 
         
 settings={}
