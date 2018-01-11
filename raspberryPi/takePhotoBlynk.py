@@ -232,7 +232,7 @@ def configSettings(value):
                 cameraBrightness=int(cameraSettings[0].strip())
                 cameraContrast=int(cameraSettings[1].strip())
                 fileName=str(cameraBrightness)+"-"+str(cameraContrast)
-                fileName=clickPhoto()
+                fileName=clickPhoto(fileName)
                 service=get_authenticated_service()                        
                 fileID=uploadMedia(service,fileName)
         except Exception as e:
