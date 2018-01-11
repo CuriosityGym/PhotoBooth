@@ -15,8 +15,23 @@ import PIL.ImageEnhance
 from random import randint
 import math
 
-adminPhone="9819057179"
-adminShutdownCode="00000"
+appJSONName='app.json'
+settingsFile="settings.json"
+
+with open(appJSONName) as data_file:    
+    appData = json.load(data_file)
+    
+
+adminPhone=appData["adminPhone"]
+adminShutdownCode=appData["adminCode"]
+BLYNK_AUTH = appData["blynkToken"]
+MAKER_CHANNEL_EVENT_NAME=appData["MAKER_CHANNEL_NAME"]
+
+with open(settingsFile) as data_file:    
+    cameraSettings = json.load(data_file)
+
+cameraBrightness=int(cameraSettings["brightness"])
+cameraContrast=int(cameraSettings["contrast"])
 
 portName='/dev/ttyUSB0'
 baudRate=115200
@@ -33,12 +48,11 @@ HighRange=math.pow(10,numberofDigits)-1
 OTPAccepted=False
 OTPGenerated=False
 
-cameraBrightness=70
-cameraContrast=70
 
-BLYNK_AUTH = 'cdfcfc54ce1d4e7e8d208fda31a2661f'
+
+
 blynk = BlynkLib.Blynk(BLYNK_AUTH)
-MAKER_CHANNEL_EVENT_NAME="upload_done"
+
 # The CLIENT_SECRETS_FILE variable specifies the name of a file that contains
 # the OAuth 2.0 information for this application, including its client_id and
 # client_secret.
@@ -220,7 +234,16 @@ def recieveSMSInformation(value):
                         setNextOTP()
                 except Exception as e:
                         print(e)
-    
+
+                        
+def saveSettings(settingsJSON):
+        f = open(settingsFile, 'r+')       
+        f.seek(0)
+        f.write(settingsJSON)
+        f.truncate()
+        f.close()
+
+
 # Register Virtual Pins
 @blynk.VIRTUAL_WRITE(2)
 def configSettings(value):
@@ -231,6 +254,11 @@ def configSettings(value):
                 cameraSettings=value.split(":")
                 cameraBrightness=int(cameraSettings[0].strip())
                 cameraContrast=int(cameraSettings[1].strip())
+                settings={}
+                settings["brightness"]=str(cameraBrightness)
+                settings["contrast"]=str(cameraContrast)
+                json_data = json.dumps(settings)
+                saveSettings(json_data)
                 fileName=str(cameraBrightness)+"-"+str(cameraContrast)
                 fileName=clickPhoto(fileName)
                 service=get_authenticated_service()                        
