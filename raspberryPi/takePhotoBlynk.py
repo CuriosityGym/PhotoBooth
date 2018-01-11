@@ -172,7 +172,7 @@ def shutdown():
         
 # Register Virtual Pins
 @blynk.VIRTUAL_WRITE(1)
-def my_write_handler(value):
+def recieveSMSInformation(value):
         global OTPGenerated
         global currentRandomNumber
         print('Current V1 value: {}'.format(value))
@@ -217,6 +217,10 @@ def my_write_handler(value):
                 except Exception as e:
                         print(e)
     
+# Register Virtual Pins
+@blynk.VIRTUAL_WRITE(2)
+def configSettings(value):
+        print(value)
         
 ##def on_message(client, userdata, message):
 ##        try: #well, shit happens
