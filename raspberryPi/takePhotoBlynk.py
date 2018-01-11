@@ -33,6 +33,9 @@ HighRange=math.pow(10,numberofDigits)-1
 OTPAccepted=False
 OTPGenerated=False
 
+cameraBrightness=70
+cameraContrast=70
+
 BLYNK_AUTH = 'cdfcfc54ce1d4e7e8d208fda31a2661f'
 blynk = BlynkLib.Blynk(BLYNK_AUTH)
 MAKER_CHANNEL_EVENT_NAME="upload_done"
@@ -67,12 +70,13 @@ REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
 
 def clickPhoto(OTP):
         filename=str(OTP)+".jpg"
+        global cameraBrightness
+        global cameraContrast
         try:
                 camera = picamera.PiCamera()
-                camera.brightness = 70
-                camera.contrast = 70
-                camera.saturation = 0
-                camera.awb_mode = 'incandescent'
+                camera.brightness = cameraBrightness
+                camera.contrast = cameraContrast                
+                camera.awb_mode = 'auto'
                 camera.capture(filename)
                 print("Photo Saved: "+filename)    
                 
@@ -221,6 +225,18 @@ def recieveSMSInformation(value):
 @blynk.VIRTUAL_WRITE(2)
 def configSettings(value):
         print(value)
+        global cameraBrightness
+        global cameraContrast
+        try:               
+                cameraSettings=value.split(":")
+                cameraBrightness=int(cameraSettings[0].strip())
+                cameraContrast=int(cameraSettings[1].strip())
+                fileName=str(cameraBrightness)+"-"+str(cameraContrast)
+                fileName=clickPhoto()
+                service=get_authenticated_service()                        
+                fileID=uploadMedia(service,fileName)
+        except Exception as e:
+                        print(e)       
         
 ##def on_message(client, userdata, message):
 ##        try: #well, shit happens
