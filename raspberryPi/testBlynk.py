@@ -13,6 +13,8 @@ def my_write_handler(value):
         recipientNumber=message[0].strip()
         recipientOTP=message[1].strip()
         print(recipientOTP)
-
+@blynk.VIRTUAL_WRITE(2)
+def config(value):
+        print(value)
 if __name__ == '__main__':
 	blynk.run()
