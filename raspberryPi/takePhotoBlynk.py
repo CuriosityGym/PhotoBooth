@@ -124,13 +124,19 @@ def get_authenticated_service():
 
 
 def uploadMedia(service, fileName):
-    folder_id='1yDr8nyPS2EOUG0DVhcn6-fPqx_FLD-Gd'
-    file_metadata = {'name': fileName, 'parents': [folder_id]}
-    media = MediaFileUpload(fileName, mimetype='image/jpeg',resumable=True,chunksize=10*1024)
-    file = service.files().insert(body=file_metadata,
+        folder_id='1yDr8nyPS2EOUG0DVhcn6-fPqx_FLD-Gd'
+        file_metadata = {'name': fileName, 'parents': [folder_id]}
+        media = MediaFileUpload(fileName, mimetype='image/jpeg',resumable=True,chunksize=10*1024)
+        request = service.files().create(body=file_metadata,
                                     media_body=media,
-                                    fields='id').execute()
-    return file["id"]
+                                    fields='id')
+        response = None
+        while response is None:
+                status, response = request.next_chunk()
+                if status:
+                        print (int(status.progress() * 100))
+                        print ("Upload Complete!")
+        return request["id"]
 
 def sendToIFTTT(senderPhoneNumber, GoogleDriveFileURL):
 	MakerURL="https://maker.ifttt.com/trigger/"+MAKER_CHANNEL_EVENT_NAME+"/with/key/cuMqB78snUe89uLgRaCZkc?"
