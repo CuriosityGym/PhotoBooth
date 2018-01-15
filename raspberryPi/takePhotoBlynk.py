@@ -62,7 +62,7 @@ CLIENT_SECRETS_FILE = "client_secret.json"
 # account.
 SCOPES = ['https://www.googleapis.com/auth/drive']
 API_SERVICE_NAME = 'drive'
-API_VERSION = 'v3'
+API_VERSION = 'v2'
 with open(CLIENT_SECRETS_FILE) as data_file:
         data = json.loads(data_file.read())
         
