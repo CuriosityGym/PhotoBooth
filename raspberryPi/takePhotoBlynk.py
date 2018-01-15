@@ -28,11 +28,11 @@ BLYNK_AUTH = appData["blynkToken"]
 MAKER_CHANNEL_EVENT_NAME=appData["MAKER_CHANNEL_NAME"]
 
 with open(settingsFile) as data_file:    
-    cameraSettings = json.load(data_file)
+    appSettings = json.load(data_file)
 
-cameraBrightness=int(cameraSettings["brightness"])
-cameraContrast=int(cameraSettings["contrast"])
-
+cameraBrightness=int(appSettings["brightness"])
+cameraContrast=int(appSettings["contrast"])
+chunkSize=int(appSettings["chunkSize"])
 portName='/dev/ttyUSB0'
 baudRate=115200
 SerialCommandSeperator=":"
@@ -126,7 +126,7 @@ def get_authenticated_service():
 def uploadMedia(service, fileName):
         folder_id='1yDr8nyPS2EOUG0DVhcn6-fPqx_FLD-Gd'
         file_metadata = {'name': fileName, 'parents': [{'id': folder_id}]}
-        media = MediaFileUpload(fileName, mimetype='image/jpeg',resumable=True,chunksize=256*1024)
+        media = MediaFileUpload(fileName, mimetype='image/jpeg',resumable=True,chunksize=chunkSize)
         request = service.files().insert(body=file_metadata,media_body=media).execute()
         print(request["id"])
         return request["id"]
