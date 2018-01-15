@@ -128,7 +128,7 @@ def uploadMedia(service, fileName):
         file_metadata = {'name': fileName, 'parents': [{'id': folder_id}]}
         media = MediaFileUpload(fileName, mimetype='image/jpeg',resumable=True,chunksize=256*1024)
         request = service.files().insert(body=file_metadata,media_body=media).execute()
-        print(request)
+        print(request["id"])
         
 
 def sendToIFTTT(senderPhoneNumber, GoogleDriveFileURL):
