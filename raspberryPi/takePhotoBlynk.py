@@ -125,9 +125,9 @@ def get_authenticated_service():
 
 def uploadMedia(service, fileName):
         folder_id='1yDr8nyPS2EOUG0DVhcn6-fPqx_FLD-Gd'
-        file_metadata = {'name': fileName, 'parents': [folder_id]}
+        file_metadata = {'name': fileName, 'parents': [{'id': folder_id}]}
         media = MediaFileUpload(fileName, mimetype='image/jpeg',resumable=True,chunksize=256*1024)
-        request = service.files().create(body=file_metadata,media_body=media).execute()
+        request = service.files().insert(body=file_metadata,media_body=media).execute()
         print(request)
         
 
