@@ -16,8 +16,9 @@ import PIL.ImageEnhance
 from random import randint
 import math
 
-appJSONName='app.json'
-settingsFile="settings.json"
+dirname, filename = os.path.split(os.path.abspath(__file__))
+appJSONName=os.path.join(dirname,"app.json")
+settingsFile=os.path.join(dirname,"settings.json")
 
 with open(appJSONName) as data_file:    
     appData = json.load(data_file)
@@ -57,7 +58,7 @@ blynk = BlynkLib.Blynk(BLYNK_AUTH)
 # The CLIENT_SECRETS_FILE variable specifies the name of a file that contains
 # the OAuth 2.0 information for this application, including its client_id and
 # client_secret.
-CLIENT_SECRETS_FILE = "client_secret.json"
+CLIENT_SECRETS_FILE = os.path.join(dirname,"client_secret.json")
 
 # This access scope grants read-only access to the authenticated user's Drive
 # account.
@@ -104,7 +105,7 @@ def clickPhoto(OTP):
 
 def get_authenticated_service():
     
-    storage = Storage('creds')
+    storage = Storage(os.path.join(dirname,'creds'))
 
     # Attempt to load existing credentials.  Null is returned if it fails.
     credentials = storage.get()
@@ -135,7 +136,7 @@ def uploadMedia(service, fileName):
         
 
 def sendToIFTTT(senderPhoneNumber, GoogleDriveFileURL):
-	MakerURL="https://maker.ifttt.com/trigger/"+MAKER_CHANNEL_EVENT_NAME+"/with/key/cuMqB78snUe89uLgRaCZkc?"
+	MakerURL="https://maker.ifttt.com/trigger/"+MAKER_CHANNEL_EVENT_NAME+"/with/key/c1BVwMuv-fI8ryLpLIihJe?"
 	MakerURL=MakerURL+"value1=+"+str(senderPhoneNumber)
 	MakerURL=MakerURL+"&value2=Here is your Selfie. Download it from "+GoogleDriveFileURL
 	print(MakerURL)
