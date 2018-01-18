@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import BlynkLib
 import json
-import os
+import os, sys
 import google.oauth2.credentials
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -15,7 +15,7 @@ import PIL.Image
 import PIL.ImageEnhance
 from random import randint
 import math
-
+sys.stdout = open(os.path.join(dirname,'PhotoBooth.log'), 'w')
 dirname, filename = os.path.split(os.path.abspath(__file__))
 appJSONName=os.path.join(dirname,"app.json")
 settingsFile=os.path.join(dirname,"settings.json")
