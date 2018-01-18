@@ -128,6 +128,7 @@ def get_authenticated_service():
 
 def uploadMedia(service, fileName):
         fileNameFullPath=os.path.join(dirname,fileName)
+        print(fileNameFullPath)
         folder_id='1yDr8nyPS2EOUG0DVhcn6-fPqx_FLD-Gd'
         #file_metadata = {'name': fileName, 'parents': [{'id': folder_id}]}
         file_metadata = {'title': fileName,'mimeType': 'image/jpeg','parents': [{'id': folder_id}]}
@@ -148,6 +149,8 @@ def sendToIFTTT(senderPhoneNumber, GoogleDriveFileURL):
 def addWatermark(fileName):
         base_path = os.path.join(dirname,fileName)
         watermark_path = os.path.join(dirname,'watermark.png')
+        print(base_path)
+        print(watermark_path)
         base = PIL.Image.open(base_path)
         baseWidth, baseHeight=base.size
         watermark = PIL.Image.open(watermark_path)
@@ -171,7 +174,7 @@ def sendSerialMessage(messageType, message):
         serialConn.write(messageData)
 
 def deleteFile(fileName):
-        os.remove(os.path.join(dirname,fileName))
+        os.remove(os.path.join(dirname,fileName)
         
 def getOTP():
         return randint(LowRange, HighRange)
@@ -226,19 +229,10 @@ def recieveSMSInformation(value):
                         time.sleep(2)
                         fileName=clickPhoto(recipientOTP)                        
                         sendSerialMessage("5","0") #Show Please Wait.. Text
-                        time.sleep(2)
-                        #addWatermark(fileName)
-                        sendSerialMessage("3","1")
-                        time.sleep(1)
-                        service=get_authenticated_service()
-                        sendSerialMessage("3","2")
-                        time.sleep(1)
-                        fileID=uploadMedia(service,fileName)
-                        sendSerialMessage("3","3")
-                        time.sleep(1)
-                        deleteFile(fileName)
-                        sendSerialMessage("3","4")
-                        time.sleep(1)
+                        addWatermark(fileName)                        
+                        service=get_authenticated_service()                        
+                        fileID=uploadMedia(service,fileName)                        
+                        deleteFile(fileName)                        
                         fileURL="https://drive.google.com/file/d/"+str(fileID)+"/view"
                         sendToIFTTT(recipientNumber,fileURL)                      
                         sendSerialMessage("6","0") #Process is Done
