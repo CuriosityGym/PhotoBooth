@@ -15,8 +15,9 @@ import PIL.Image
 import PIL.ImageEnhance
 from random import randint
 import math
-sys.stdout = open(os.path.join(dirname,'PhotoBooth.log'), 'w')
+
 dirname, filename = os.path.split(os.path.abspath(__file__))
+sys.stdout = open(os.path.join(dirname,'PhotoBooth.log'), 'w')
 appJSONName=os.path.join(dirname,"app.json")
 settingsFile=os.path.join(dirname,"settings.json")
 
