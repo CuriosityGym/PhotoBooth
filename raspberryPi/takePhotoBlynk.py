@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import BlynkLib
 import json
 import os
