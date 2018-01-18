@@ -226,7 +226,8 @@ def recieveSMSInformation(value):
                         time.sleep(2)
                         fileName=clickPhoto(recipientOTP)                        
                         sendSerialMessage("5","0") #Show Please Wait.. Text
-                        addWatermark(fileName)
+                        time.sleep(2)
+                        #addWatermark(fileName)
                         sendSerialMessage("3","1")
                         time.sleep(1)
                         service=get_authenticated_service()
