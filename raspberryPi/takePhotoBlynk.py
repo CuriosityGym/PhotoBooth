@@ -146,8 +146,8 @@ def sendToIFTTT(senderPhoneNumber, GoogleDriveFileURL):
 	print(r)
 		
 def addWatermark(fileName):
-        base_path = fileName
-        watermark_path = 'watermark.png'
+        base_path = os.path.join(dirname,fileName)
+        watermark_path = os.path.join(dirname,'watermark.png')
         base = PIL.Image.open(base_path)
         baseWidth, baseHeight=base.size
         watermark = PIL.Image.open(watermark_path)
@@ -161,7 +161,7 @@ def addWatermark(fileName):
         some_xy_offset = (baseWidth-watermarkWidth-10, baseHeight-watermarkHeight-10)
         # the mask uses the transparency of the watermark (if it exists)
         base.paste(watermark, some_xy_offset, mask=watermark)
-        base.save(fileName)
+        base.save(os.path.join(dirname,fileName))
         
 def sendSerialMessage(messageType, message):
         messageData=messageType+SerialCommandSeperator+message+SerialCommandEnd
