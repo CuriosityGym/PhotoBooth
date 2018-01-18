@@ -174,7 +174,7 @@ def sendSerialMessage(messageType, message):
         serialConn.write(messageData)
 
 def deleteFile(fileName):
-        os.remove(os.path.join(dirname,fileName)
+        os.remove(os.path.join(dirname,fileName))
         
 def getOTP():
         return randint(LowRange, HighRange)
