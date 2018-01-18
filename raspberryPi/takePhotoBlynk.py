@@ -229,10 +229,14 @@ def recieveSMSInformation(value):
                         time.sleep(2)
                         fileName=clickPhoto(recipientOTP)                        
                         sendSerialMessage("5","0") #Show Please Wait.. Text
-                        addWatermark(fileName)                        
-                        service=get_authenticated_service()                        
-                        fileID=uploadMedia(service,fileName)                        
-                        deleteFile(fileName)                        
+                        addWatermark(fileName)
+                        sendSerialMessage("3","0")
+                        service=get_authenticated_service()
+                        sendSerialMessage("3","1")
+                        fileID=uploadMedia(service,fileName)
+                        sendSerialMessage("3","2")
+                        deleteFile(fileName)
+                        sendSerialMessage("3","3")
                         fileURL="https://drive.google.com/file/d/"+str(fileID)+"/view"
                         sendToIFTTT(recipientNumber,fileURL)                      
                         sendSerialMessage("6","0") #Process is Done
