@@ -1,7 +1,7 @@
 # PhotoBooth
 
 
-![Image of PhotoBooth](https://octodex.github.com/images/photobooth.jpg)
+![Image of PhotoBooth](https://github.com/CuriosityGym/PhotoBooth/blob/master/images/photobooth.jpg)
 The Photobooth is a novel way to click selfies using SMS
 
 The photobooth application is a new generation spin on the old style photobooth, which allows you to take photos with friends. 
