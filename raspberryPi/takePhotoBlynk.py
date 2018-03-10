@@ -269,6 +269,7 @@ def configSettings(value):
                 settings={}
                 settings["brightness"]=str(cameraBrightness)
                 settings["contrast"]=str(cameraContrast)
+                settings["chunkSize"]="102400"
                 json_data = json.dumps(settings)
                 saveSettings(json_data)
                 fileName=str(cameraBrightness)+"-"+str(cameraContrast)
