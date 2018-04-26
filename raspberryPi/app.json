@@ -1,1 +1,6 @@
-{"blynkToken": "cdfcfc54ce1d4e7e8d208fda31a2661f", "adminPhone": "9819057179", "adminCode": "00000","MAKER_CHANNEL_NAME":"upload_done" }
+{
+	"blynkToken": "cdfcfc54ce1d4e7e8d208fda31a2661f",
+	"adminPhone": "9819057179",
+	"adminCode": "00000",
+	"MAKER_CHANNEL_NAME":"upload_done",
+	"adminTriggerWord":"111111" }
