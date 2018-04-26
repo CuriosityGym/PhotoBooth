@@ -305,6 +305,7 @@ def configSettings(value):
  
 
 if __name__ == '__main__':
+        print("Starting PhotoBooth")
         blynk.run()
 
         
