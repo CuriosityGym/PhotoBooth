@@ -17,7 +17,7 @@ from random import randint
 import math
 
 dirname, filename = os.path.split(os.path.abspath(__file__))
-sys.stdout = open(os.path.join(dirname,'PhotoBooth.log'), 'w')
+#sys.stdout = open(os.path.join(dirname,'PhotoBooth.log'), 'w')
 appJSONName=os.path.join(dirname,"app.json")
 settingsFile=os.path.join(dirname,"settings.json")
 
