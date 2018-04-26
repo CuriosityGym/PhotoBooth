@@ -129,7 +129,10 @@ def uploadMedia(service, fileName):
         folder_id='1yDr8nyPS2EOUG0DVhcn6-fPqx_FLD-Gd'
         #file_metadata = {'name': fileName, 'parents': [{'id': folder_id}]}
         file_metadata = {'title': fileName,'mimeType': 'image/jpeg','parents': [{'id': folder_id}]}
+        
+
         media = MediaFileUpload(fileNameFullPath, mimetype='image/jpeg',resumable=True,chunksize=chunkSize)
+        print(media)
         request = service.files().insert(body=file_metadata,media_body=media).execute()
         print(request["id"])
         return request["id"]
@@ -281,7 +284,7 @@ def configSettings(value):
                 fileName=str(cameraBrightness)+"-"+str(cameraContrast)
                 fileName=clickPhoto(fileName)
                 service=get_authenticated_service()                        
-                #fileID=uploadMedia(service,fileName)
+                fileID=uploadMedia(service,fileName)
                 deleteFile(fileName)
         except Exception as e:
                         print(e)       
