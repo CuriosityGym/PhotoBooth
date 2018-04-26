@@ -130,7 +130,7 @@ def uploadMedia(service, fileName):
         #file_metadata = {'name': fileName, 'parents': [{'id': folder_id}]}
         file_metadata = {'title': fileName,'mimeType': 'image/jpeg','parents': [{'id': folder_id}]}
         
-
+        print(fileNameFullPath)
         media = MediaFileUpload(fileNameFullPath, mimetype='image/jpeg',resumable=True,chunksize=chunkSize)
         print(media)
         request = service.files().insert(body=file_metadata,media_body=media).execute()
@@ -281,7 +281,7 @@ def configSettings(value):
                 settings["chunkSize"]="102400"
                 json_data = json.dumps(settings)
                 saveSettings(json_data)
-                fileName=str(cameraBrightness)+"-"+str(cameraContrast)
+                fileName=str(cameraBrightness)+""+str(cameraContrast)
                 fileName=clickPhoto(fileName)
                 service=get_authenticated_service()                        
                 fileID=uploadMedia(service,fileName)
