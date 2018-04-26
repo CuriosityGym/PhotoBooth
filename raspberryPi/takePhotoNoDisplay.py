@@ -199,7 +199,7 @@ def recieveSMSInformation(value):
         recipientNumber=message[0].strip()
         recipientNumber=recipientNumber[-10:] #remove all country codes and extra characters 
         recipientOTP=message[1].strip()
-        print(currentRandomNumber)
+        #print(currentRandomNumber)
         print(recipientOTP)
         print(OTPGenerated)
         if(recipientNumber==adminPhone and recipientOTP==adminShutdownCode): #verify if it is to shutdown the device
