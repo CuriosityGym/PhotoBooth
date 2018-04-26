@@ -206,7 +206,7 @@ def recieveSMSInformation(value):
                 print("Shutdown Recieved")
                 shutdown()
                 return
-        if(recipientOTP==adminTriggerWord): #verify if it is to shutdown the device
+        if(recipientOTP==adminTriggerWord): #Trigger PhotoBooth Manually
                 #print("Shutdown Recieved")
                 #shutdown()
                 fileName=clickPhoto(recipientOTP)
@@ -217,7 +217,7 @@ def recieveSMSInformation(value):
                 #sendSerialMessage("3","2")
                 deleteFile(fileName)
                 fileURL="https://drive.google.com/file/d/"+str(fileID)+"/view"
-                sendToIFTTT(recipientNumber,fileURL) 
+                #sendToIFTTT(recipientNumber,fileURL) 
                 return
                 
         if(OTPGenerated and str(recipientOTP)==str(currentRandomNumber)):
